@@ -17,6 +17,27 @@
         <li>Your template at <code><a href="{{ '/var/www/html/oclemsym/templates/avispas/index.html.twig'|file_link(0) }}">templates/avispas/index.html.twig</a></code></li>
     </ul>
 
-    <p>Resultado de la base de datos: {{ resultado }}</p>
+    <table>
+    	<tr>
+    		<th>Nombre</th>
+    		<th>Entorno</th>
+    		<th>Color</th>
+    		<th>Veneno</th>
+    	</tr>
+    	{% for avispa in avispas %}
+    	<tr>
+    		<td>{{ avispa.nombre }}</td>
+    		<td>{{ avispa.entorno }}</td>
+    		<td>{{ avispa.color }}</td>
+    		<td>{{ avispa.venenosa }}</td>
+    		<td>
+    			<a href="{{ path('mostrar_avispa', {'id': avispa.id}) }}">Mostrar</a>
+    			<a href="avispas/editar/{{ avispa.id }}">Editar</a>
+    			<a href="avispas/borrar/{{ avispa.id }}">Borrar</a>
+    		</td>
+    	</tr>
+    	{% endfor %}
+    </table>
+
 </div>
 {% endblock %}

@@ -31,3 +31,7 @@ Problemas:
 No puede encontrar el driver: Instalar el modulo mysql en la version actual de php - `sudo apt-get install php[version~7.1]-mysql`
 
 Confirmacion: `php -i | grep mysql`
+
+## Form
+
+Instalado de serie

@@ -1,0 +1,18 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Mostrar avispa{% endblock %}
+
+{% block body %}
+
+	<h2>Avispa</h2>
+	
+	<ul>
+	{% for clave, detalle in avispa %}
+
+		<li>{{ clave }}: {{ detalle }}</li>
+
+	{% endfor %}
+	</ul>
+
+{% endblock %}

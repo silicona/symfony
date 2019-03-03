@@ -1,0 +1,12 @@
+
+@import "~bootstrap/scss/bootstrap";
+
+body {
+    background-color: var(--danger);
+}
+
+.nav {
+	a {
+		margin: 0 1em;
+	}
+}

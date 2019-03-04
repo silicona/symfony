@@ -66,7 +66,6 @@ class AjaxController extends AbstractController {
 
                 $datos = array(
                     'status' => 'ko',
-                    //'error' => gettype($id)
                     'error' => 'No existe la avispa en cuestión.'
                 );
             }

@@ -18,6 +18,41 @@ console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 
 $('#jquery').html('Dentro');
 
+function enviar_ajax(id, campo){
+
+	$.ajax({
+		type: 'POST',
+		url: '/ajax/recibir',
+		dataType: 'json',
+		data: {
+			hash: 'hash',
+			id: id
+		},
+		success: function(res){
+
+			obj_res = $.parseJSON(res);
+
+			if( obj_res.status == 'ok' ){
+
+				campo.html(obj_res.mensaje.nombre);
+
+			} else {
+
+				campo.html(obj_res.error);
+			}
+		},
+		fail: function(res){
+
+			campo.html(res);
+		},
+		complete: function(res){
+
+			console.log(res);
+			campo.append('<p>Ajax terminado!!</p>');
+		}
+	})
+}
+
 $(function(){
 
 	$('.boton_ajax').click(function(e){
@@ -26,36 +61,6 @@ $(function(){
 		id = $(boton).attr('data-id');
 		campo = $('#respuesta');
 
-		$.ajax({
-			type: 'POST',
-			url: '/ajax/recibir',
-			dataType: 'json',
-			data: {
-				hash: 'hash',
-				id: id
-			},
-			success: function(res){
-
-				obj_res = $.parseJSON(res);
-
-				if( obj_res.status == 'ok' ){
-
-					campo.html(obj_res.mensaje.nombre);
-
-				} else {
-
-					campo.html(obj_res.error);
-				}
-			},
-			fail: function(res){
-
-				campo.html(res);
-			},
-			complete: function(res){
-
-				console.log(res);
-				campo.append('<p>Ajax terminado!!</p>');
-			}
-		})
+		enviar_ajax(id, campo);
 	});
 });

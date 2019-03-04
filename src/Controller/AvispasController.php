@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Type;
@@ -51,8 +51,9 @@ class AvispasController extends AbstractController
     }
 
 
+    //@Route("/avispas/{id}", name="mostrar_avispa", requirements = {"id" = "\d+"})
     /**
-     * @Route("/avispas/{<\d+>}", name="mostrar_avispa")
+     * @Route("/avispas/{id<\d+>}", name="mostrar_avispa")
      */
     public function mostrar($id){
 
@@ -99,7 +100,15 @@ class AvispasController extends AbstractController
     		-> add('color', TextType::class, [
     			'label' => 'Etiqueta de Color'
     		])
-    		-> add('venenosa', RadioType::class, [])
+    		-> add('venenosa', ChoiceType::class, [
+    			'choices' => ['si' => 1, 'no' => 0],
+    			'choice_label' => function($valor, $clave, $valorEleccion){
+
+    				return ucfirst($clave);
+    			},
+    			'label' => '¿Tiene veneno?',
+    			'expanded' => true
+    		])
     		-> getForm();
 
     	$form -> handleRequest($request);
@@ -113,8 +122,8 @@ class AvispasController extends AbstractController
 	    	$avispa = new Avispas();
 	    	$avispa -> setNombre($data['nombre']);
 	    	$avispa -> setEntorno($data['entorno']);
-	    	$avispa -> setColor('amarillo y negro');
-	    	$avispa -> setVenenosa(true);
+	    	$avispa -> setColor($data['color']);
+	    	$avispa -> setVenenosa($data['venenosa']);
 
 	    	$gestor -> persist($avispa);
 

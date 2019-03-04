@@ -1,0 +1,28 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajax de Avispas{% endblock %}
+
+{% block body %}
+
+	<div class="row">
+		
+		<div class="col-md-12">
+			
+			<h2>Ajax de Avispas</h2>
+
+			<ul>
+				{% for avispa in avispas %}
+
+					<li class="boton_ajax" data-id="{{ avispa.id }}">{{ avispa.nombre }}</li>
+
+				{% endfor %}
+			</ul>
+
+			<div id="respuesta"></div>
+			
+		</div>
+
+	</div>
+
+{% endblock %}

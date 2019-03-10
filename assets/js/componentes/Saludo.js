@@ -6,11 +6,13 @@ class Saludo extends Component {
 	render(){
 
 		return(
-			<section class="col-md-12">
-				<article>
-					<h2>Hola Mundo!</h2>
-				</article>
-			</section>
+			<div className="row">
+				<section className="col-md-12">
+					<article>
+						<h2>Hola Mundo!</h2>
+					</article>
+				</section>
+			</div>
 		);
 	}
 

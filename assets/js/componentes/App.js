@@ -1,9 +1,10 @@
 
-import React, {Component} from 'react';
-import Saludo from './Saludo';
+import React from 'react';
 
-class App extends Component {
-// class App extends React.Component {
+import Saludo from './Saludo';
+import ListaAvispas from './ListaAvispas';
+
+class App extends React.Component {
 
 	contructor() {
 
@@ -18,16 +19,14 @@ class App extends Component {
 	componentDidMount(){
 
 		console.log('Componente montado');
-
-		//fetch('/avispas/avispas_json').then( response => response)
 	}
 
 	render() {
 
 		return(
-			<div className="row">
+			<div>
 				<Saludo />
-				
+				<ListaAvispas />
 			</div>
 		);
 	}

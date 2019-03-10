@@ -16,8 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 use App\Entity\Avispas;
 
-class AvispasController extends AbstractController
-{
+class AvispasController extends AbstractController {
 
 
     /**
@@ -153,6 +152,7 @@ class AvispasController extends AbstractController
 
         $avispas = $repositorio -> findAll();
 
+        //return json_encode($avispas);
         return new JsonResponse($avispas);
     }
 }

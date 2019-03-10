@@ -12,10 +12,14 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Type;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 use App\Entity\Avispas;
 
 class AvispasController extends AbstractController
 {
+
+
     /**
      * @Route("/avispas", name="avispas")
      */
@@ -137,5 +141,18 @@ class AvispasController extends AbstractController
 			'form' => $form -> createView()
 		]);
 
+    }
+
+
+    /**
+     * @Route("/avispas/avispas_json", name="avispas_json")
+     */
+    public function avispas_json(){
+
+        $repositorio = $this -> getDoctrine() -> getRepository(Avispas::class);
+
+        $avispas = $repositorio -> findAll();
+
+        return new JsonResponse($avispas);
     }
 }

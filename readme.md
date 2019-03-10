@@ -35,3 +35,19 @@ Confirmacion: `php -i | grep mysql`
 ## Form
 
 Instalado de serie
+
+## React
+
+Habilitado con npm y en webpack.config.js
+
+npm:
+	- `npm install --save @babel/preset-react`
+	- `npm install --save react react-dom prop-types babel-preset-react`
+
+webpack:
+	- Linea ".enableReactPreset()"
+
+Creamos un controlador (y vista) para react
+`php bin/console make:controller ReactController`
+
+Seguimos en [ejemplo de cloudways](https://www.cloudways.com/blog/symfony-react-using-webpack-encore/)

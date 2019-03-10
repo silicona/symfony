@@ -13,6 +13,10 @@ const $ = require('jquery');
 
 require('bootstrap');
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './componentes/App';
+
 console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 
 
@@ -63,4 +67,15 @@ $(function(){
 
 		enviar_ajax(id, campo);
 	});
+	
 });
+
+/*
+ReactDOM.render(<App />, $('#root'));
+*/
+var ventana = window.location.href;
+
+if( ventana.indexOf('react') != -1 ){
+
+	ReactDOM.render(<App />, document.getElementById('root'));
+}

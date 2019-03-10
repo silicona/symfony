@@ -18,6 +18,7 @@ Encore
      * and one CSS file (e.g. app.css) if you JavaScript imports CSS.
      */
     .enableSassLoader()
+    .enableReactPreset()
     
     .addEntry('app', './assets/js/app.js')
     //.addEntry('page1', './assets/js/page1.js')
@@ -43,8 +44,6 @@ Encore
     // enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
 
-    // enables Sass/SCSS support
-    //.enableSassLoader()
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()

@@ -152,7 +152,7 @@ class AvispasController extends AbstractController {
 
         $avispas = $repositorio -> findAll();
 
-        //return json_encode($avispas);
+        return $avispas;
         return new JsonResponse($avispas);
     }
 }

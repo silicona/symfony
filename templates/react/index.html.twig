@@ -20,3 +20,11 @@
 
 <div id="root"></div>
 {% endblock %}
+
+{% block javascripts %}
+
+	{{ parent() }}
+
+	<script src="{{ asset('extra') }}">
+
+{% endblock %}

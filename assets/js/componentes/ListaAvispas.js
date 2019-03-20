@@ -16,6 +16,7 @@ class ListaAvispas extends Component {
 	componentDidMount(){
 
 		fetch('/avispas/avispas_json')
+		//fetch('https://jsonplaceholder.typicode.com/posts/')
 			.then(response => response.json())
 			.then(entradas => {
 				console.log(entradas);

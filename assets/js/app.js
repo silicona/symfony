@@ -7,6 +7,7 @@
 
 // any CSS you require will output into a single css file (app.css in this case)
 require('../css/app.scss');
+//require('./extra.js');
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 const $ = require('jquery');
@@ -70,9 +71,7 @@ $(function(){
 	
 });
 
-/*
-ReactDOM.render(<App />, $('#root'));
-*/
+
 var ventana = window.location.href;
 
 if( ventana.indexOf('react') != -1 ){

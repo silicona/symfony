@@ -7,6 +7,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+use App\Helper\Calculadora;
+
 class InicioController extends AbstractController {
 
 	/**
@@ -22,9 +24,13 @@ class InicioController extends AbstractController {
         );
         */
 
+        $calc = new Calculadora();
+
+        $res = $calc -> sumar(2, 2);
+
         $locales = array(
         	'titulo' => 'Inicio',
-        	'numero' => $numero
+        	'numero' => $res
         );
 
         return $this -> render('inicio.html.twig', $locales);

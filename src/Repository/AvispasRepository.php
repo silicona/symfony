@@ -19,10 +19,9 @@ class AvispasRepository extends ServiceEntityRepository
         parent::__construct($registry, Avispas::class);
     }
 
-    // /**
-    //  * @return Avispas[] Returns an array of Avispas objects
-    //  */
-    /*
+    /**
+     * @return Avispas[] Returns an array of Avispas objects
+     */
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('a')
@@ -34,7 +33,7 @@ class AvispasRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Avispas

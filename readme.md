@@ -43,6 +43,8 @@ Habilitado con npm y en webpack.config.js
 npm:
 	- `npm install --save @babel/preset-react`
 	- `npm install --save react react-dom prop-types babel-preset-react`
+	Añade las características de ES6 en cualquier navegador
+	- `npm install babel-polyfill babel-preset-env --dev`
 
 webpack:
 	- Linea ".enableReactPreset()"
@@ -51,3 +53,9 @@ Creamos un controlador (y vista) para react
 `php bin/console make:controller ReactController`
 
 Seguimos en [ejemplo de cloudways](https://www.cloudways.com/blog/symfony-react-using-webpack-encore/)
+
+[Blog Jeffrey de testing y React](https://www.thinktocode.com/2018/06/14/symfony-unit-testing-with-a-database/)
+
+[Blog jeffrey Routing react](https://www.thinktocode.com/2018/06/28/symfony-4-and-reactjs-routing/)
+
+[Blog jeffrey Arquitectura de capas](https://www.thinktocode.com/2018/07/05/layered-architecture/)

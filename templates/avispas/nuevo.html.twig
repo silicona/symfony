@@ -10,6 +10,18 @@
 		<div class="col-md-10 offset-md-1">
 
 			<h2>Crea una nueva avispa</h2>
+			
+			{{ form(form) }}
+
+			
+
+		</div>
+
+	</div>
+
+{% endblock %}
+
+{% block extra %}
 
 			{{ form_start(form) }}
 
@@ -18,9 +30,4 @@
 				<input type ="submit">
 				
 			{{ form_end(form) }}
-
-		</div>
-
-	</div>
-
-{% endblock %}
+		{% endblock %}

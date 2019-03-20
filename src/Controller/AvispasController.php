@@ -6,15 +6,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+// use Symfony\Component\Form\Extension\Core\Type\TextType;
+// use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Type;
+// use Symfony\Component\Validator\Constraints\NotBlank;
+// use Symfony\Component\Validator\Constraints\Type;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 use App\Entity\Avispas;
+
+use App\Form\FormAvispa;
 
 class AvispasController extends AbstractController {
 
@@ -22,26 +25,8 @@ class AvispasController extends AbstractController {
     /**
      * @Route("/avispas", name="avispas")
      */
-    public function index()
-    {
-    	/*
-    	$gestor = $this -> getDoctrine() -> getManager();
+    public function index(){
 
-    	$avispa = new Avispas();
-    	$avispa -> setNombre('Africana');
-    	$avispa -> setEntorno('África');
-    	$avispa -> setColor('amarillo y negro');
-    	$avispa -> setVenenosa(true);
-
-    	$gestor -> persist($avispa);
-
-    	$gestor -> flush();
-
-        return $this->render('avispas/index.html.twig', [
-            'controller_name' => 'AvispasController',
-            'resultado' => 'Nueva avispa: ' . $avispa -> getId()
-        ]);
-        */
 
         $repositorio = $this -> getDoctrine() -> getRepository(Avispas::class);
 
@@ -50,6 +35,27 @@ class AvispasController extends AbstractController {
         return $this -> render('avispas/index.html.twig', [ 
             'controller_name' => 'AvispasController',
         	'avispas' => $avispas 
+        ]);
+    }
+
+
+    public function index_old(){
+
+        $gestor = $this -> getDoctrine() -> getManager();
+
+        $avispa = new Avispas();
+        $avispa -> setNombre('Africana');
+        $avispa -> setEntorno('África');
+        $avispa -> setColor('amarillo y negro');
+        $avispa -> setVenenosa(true);
+
+        $gestor -> persist($avispa);
+
+        $gestor -> flush();
+
+        return $this->render('avispas/index.html.twig', [
+            'controller_name' => 'AvispasController',
+            'resultado' => 'Nueva avispa: ' . $avispa -> getId()
         ]);
     }
 
@@ -83,8 +89,59 @@ class AvispasController extends AbstractController {
     /**
      *@Route("/avispas/editar/{id}", name = "editar_avispa")
      */
-    public function editar($id){
+    public function editar($id, Request $request){
 
+        $avispa = $this -> getDoctrine()
+                    -> getRepository(Avispas::class)
+                    -> find($id);
+
+        $form = $this -> createForm(FormAvispa::class, $avispa);
+
+        $form -> handleRequest($request);
+
+        if( $form -> isSubmitted() && $form -> isValid() ){
+
+            $data = $form -> getData();
+            
+            $gestor = $this -> getDoctrine() -> getManager();
+
+            //$avispa = new Avispas();
+            $avispa -> setNombre($data -> getNombre());
+            $avispa -> setEntorno($data -> getEntorno());
+            $avispa -> setColor($data -> getColor());
+            $avispa -> setVenenosa($data -> getVenenosa());
+
+            $gestor -> persist($avispa);
+
+            $gestor -> flush();
+
+            return $this -> redirectToRoute('avispas');
+        }
+
+        return $this -> render('avispas/editar.html.twig', [
+            'form' => $form -> createView()
+        ]);
+    }
+
+    /**
+     * @Route("/avispas/borrar/{id}", name = "borrar_avispa")
+     */
+    public function borrar($id){
+
+        $gestor = $this -> getDoctrine() -> getManager();
+
+        $avispa = $gestor -> getRepository(Avispas::class) -> find($id);
+
+        if( !$avispa ){
+
+            throw $this -> createNotFoundException( 'No existe para la avispa ' . $id );
+        }
+
+        $gestor -> remove($avispa);
+
+        $gestor -> flush();
+
+        return $this -> redirectToRoute('avispas');
     }
 
 
@@ -93,26 +150,10 @@ class AvispasController extends AbstractController {
      */
     public function nuevo(Request $request){
 
-    	$form = $this -> createFormBuilder(null, [
-    		'action' => 'nuevo'
-    	])
-    		-> add('nombre', Texttype::class, [
-    			'constraints' => new notBlank()
-    		])
-    		-> add('entorno', TextType::class)
-    		-> add('color', TextType::class, [
-    			'label' => 'Etiqueta de Color'
-    		])
-    		-> add('venenosa', ChoiceType::class, [
-    			'choices' => ['si' => 1, 'no' => 0],
-    			'choice_label' => function($valor, $clave, $valorEleccion){
+        $avispa = new Avispas();
 
-    				return ucfirst($clave);
-    			},
-    			'label' => '¿Tiene veneno?',
-    			'expanded' => true
-    		])
-    		-> getForm();
+        $form = $this -> createForm(FormAvispa::class);
+        // $form = $this -> createForm(FormAvispa::class, $avispa);
 
     	$form -> handleRequest($request);
 
@@ -122,23 +163,22 @@ class AvispasController extends AbstractController {
 			
 			$gestor = $this -> getDoctrine() -> getManager();
 
-	    	$avispa = new Avispas();
-	    	$avispa -> setNombre($data['nombre']);
-	    	$avispa -> setEntorno($data['entorno']);
-	    	$avispa -> setColor($data['color']);
-	    	$avispa -> setVenenosa($data['venenosa']);
+	    	//$avispa = new Avispas();
+	    	$avispa -> setNombre($data -> getNombre());
+	    	$avispa -> setEntorno($data -> getEntorno());
+	    	$avispa -> setColor($data -> getColor());
+	    	$avispa -> setVenenosa($data -> getVenenosa());
 
 	    	$gestor -> persist($avispa);
 
 	    	$gestor -> flush();
 
-
     		return $this -> redirectToRoute('avispas');
     	}
-
-		return $this -> render('avispas/nuevo.html.twig', [
-			'form' => $form -> createView()
-		]);
+        
+        return $this -> render('avispas/nuevo.html.twig', [
+            'form' => $form -> createView()
+        ]);
 
     }
 
@@ -152,7 +192,7 @@ class AvispasController extends AbstractController {
 
         $avispas = $repositorio -> findAll();
 
-        return $avispas;
-        return new JsonResponse($avispas);
+        //return $avispas;
+        return new Response(json_encode($avispas));
     }
 }

@@ -4,12 +4,12 @@ namespace App\Tests\Controller;
 
 use App\Controller\AvispasController;
 use App\Entity\Avispas;
-//use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 // Necesario definir la var KERNEL_CLASS en phpunit.xml.dist
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class AvispasControllerTest extends WebTestCase {
+class AvispasControllerWebTest extends WebTestCase {
 
 	//public static $controlador;
 
@@ -32,15 +32,26 @@ class AvispasControllerTest extends WebTestCase {
 		//$this -> assertEquals( 200, $res );
 	}
 
-
 	public function test_avispas_json(){
 				
 		$cliente = static::createClient();
 
 		$rondador = $cliente -> request('GET', '/avispas/avispas_json');
 
-		$res = $cliente -> getResponse() -> getContent();
+		//$res = $rondador -> getResponse() -> getContent();
 
-		$this -> assertSame( 42, $res, 'Debería ser 42 como entero.' );
+		//$this -> assertSame( 42, $res, 'Debería ser 42 como entero.' );
 	}
 }
+
+// class AvispasControllerTest extends TestCase {
+
+// 	public function ñlkñlktest_avispas_json(){
+				
+// 		$controller = AvispasController;
+
+// 		$res = $controller -> avispas_json();
+
+// 		$this -> assertSame( 42, $res, 'Debería ser 42 como entero.' );
+// 	}
+// }

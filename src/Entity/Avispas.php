@@ -36,6 +36,12 @@ class Avispas
      */
     private $venenosa;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Continente", inversedBy="avispas")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $continente;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +91,18 @@ class Avispas
     public function setVenenosa(bool $venenosa): self
     {
         $this->venenosa = $venenosa;
+
+        return $this;
+    }
+
+    public function getContinente(): ?Continente
+    {
+        return $this->continente;
+    }
+
+    public function setContinente(?Continente $continente): self
+    {
+        $this->continente = $continente;
 
         return $this;
     }

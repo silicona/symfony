@@ -36,6 +36,9 @@ class FormAvispa extends AbstractType{
     			'label' => '¿Tiene veneno?',
     			'expanded' => true
     		])
+            -> add('continente', TextType::class,[
+                'label' => 'hogar del animal'
+            ])
     		-> add('Guardar', SubmitType::class);
 	}
 

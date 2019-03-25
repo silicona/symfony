@@ -44,9 +44,11 @@ Encore
     // enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
 
-    /*.configureBabel( function(babelConfig){
-        babelConfig.presets.push('env');
-    })*/
+    .configureBabel( function(babelConfig){
+        //babelConfig.presets.push('env');
+        //babelConfig.presets.push('es2015')
+        //babelConfig.presets.push('stage-0')
+    })
 
 
     // uncomment if you use TypeScript

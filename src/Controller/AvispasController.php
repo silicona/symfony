@@ -16,8 +16,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 use App\Entity\Avispas;
+use App\Entity\Continente;
 
 use App\Form\FormAvispa;
+use App\Form\FormContinente;
 
 class AvispasController extends AbstractController {
 
@@ -28,13 +30,14 @@ class AvispasController extends AbstractController {
     public function index(){
 
 
-        $repositorio = $this -> getDoctrine() -> getRepository(Avispas::class);
+        $avispas = $this -> getDoctrine() -> getRepository(Avispas::class) -> findAll();
 
-        $avispas = $repositorio -> findAll();
+        $continentes = $this -> getDoctrine() -> getRepository(Continente::class) -> findAll();
 
         return $this -> render('avispas/index.html.twig', [ 
             'controller_name' => 'AvispasController',
-        	'avispas' => $avispas 
+        	'avispas' => $avispas,
+            'continentes' => $continentes,
         ]);
     }
 
@@ -152,6 +155,7 @@ class AvispasController extends AbstractController {
 
         $avispa = new Avispas();
 
+
         $form = $this -> createForm(FormAvispa::class);
         // $form = $this -> createForm(FormAvispa::class, $avispa);
 
@@ -167,7 +171,13 @@ class AvispasController extends AbstractController {
 	    	$avispa -> setNombre($data -> getNombre());
 	    	$avispa -> setEntorno($data -> getEntorno());
 	    	$avispa -> setColor($data -> getColor());
-	    	$avispa -> setVenenosa($data -> getVenenosa());
+            $avispa -> setVenenosa($data -> getVenenosa());
+
+            $continente = $this -> getDoctrine() -> getRepository(Continente::class) -> find($data -> getContinente());
+            //var_dump($continente);
+
+            //$avispa -> setContinente($continente);
+	    	$avispa -> setContinente($data -> getContinente());
 
 	    	$gestor -> persist($avispa);
 
@@ -184,6 +194,38 @@ class AvispasController extends AbstractController {
 
 
     /**
+     * @Route("avispas/nuevo-continente", name = "crear_continente")
+     */
+    public function nuevo_continente(Request $request){
+
+        $form = $this -> createForm(FormContinente::class);
+
+        $form -> handleRequest($request);
+
+        if( $form -> isSubmitted() && $form -> isValid() ){
+
+            $datos = $form -> getData();
+
+            $continente = new Continente();
+
+            $gestor = $this -> getDoctrine() -> getManager();
+
+            $continente -> setNombre( $datos -> getNombre() );
+
+            $gestor -> persist($continente);
+
+            $gestor -> flush();
+
+            return $this -> redirectToRoute('avispas');
+        }
+
+        return $this -> render('continente/nuevo.html.twig', [
+            'form' => $form -> createView(),
+        ]);
+    }
+
+
+    /**
      * @Route("/avispas/avispas_json", name="avispas_json")
      */
     public function avispas_json(){
@@ -192,7 +234,9 @@ class AvispasController extends AbstractController {
 
         $avispas = $repositorio -> findAll();
 
+        var_dump($avispas);
+
         //return $avispas;
-        return new Response(json_encode($avispas));
+        return new JsonResponse($avispas);
     }
 }

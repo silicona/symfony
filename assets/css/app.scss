@@ -10,3 +10,55 @@ body {
 		margin: 0 1em;
 	}
 }
+
+/* React */
+
+.juego {
+
+		display: flex;
+		flex-direction: row;
+	
+	ol, ul {
+		padding-left: 30px;
+	}
+
+	.tablero:after {
+
+		clear: both;
+		content: '';
+		display: table;
+	}
+
+	.estado {
+		margin-bottom: 10px;
+	}
+
+	.cuadrado {
+		background: #FFFFFF;
+		border: 1px solid #999;
+		float: left;
+		font-size: 24px;
+		font-weight: bold;
+		line-height: 34px;
+		height: 34px;
+		margin-right: -1px;
+		margin-top: -1px;
+		padding: 0;
+		text-align: center;
+		width: 34px;
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	.kbd-navigation .cuadrado:focus {
+		background: #ddd;
+	}
+
+	info {
+	  margin-left: 20px;
+	}
+
+
+}

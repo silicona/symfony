@@ -18,25 +18,41 @@
     </ul>
 
     <p><a href="{{ path('crear_avispa') }}" class="nav-item">Crear Avispa</a></p>
+    <p><a href="{{ path('crear_continente') }}" class="nav-item">Crear Continente</a></p>
+
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Entorno</th>
+            <th>Color</th>
+            <th>Veneno</th>
+            <th>Continente</th>
+        </tr>
+        {% for avispa in avispas %}
+        <tr>
+            <td>{{ avispa.nombre }}</td>
+            <td>{{ avispa.entorno }}</td>
+            <td>{{ avispa.color }}</td>
+            <td>{{ avispa.venenosa }}</td>
+            <td>{{ avispa.continente }}</td>
+            <td>
+                <a href="{{ path('mostrar_avispa', {'id': avispa.id}) }}">Mostrar</a>
+                <a href="avispas/editar/{{ avispa.id }}">Editar</a>
+                <a href="avispas/borrar/{{ avispa.id }}">Borrar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 
     <table>
     	<tr>
+            <th>Id</th>
     		<th>Nombre</th>
-    		<th>Entorno</th>
-    		<th>Color</th>
-    		<th>Veneno</th>
     	</tr>
-    	{% for avispa in avispas %}
+    	{% for continente in continentes %}
     	<tr>
-    		<td>{{ avispa.nombre }}</td>
-    		<td>{{ avispa.entorno }}</td>
-    		<td>{{ avispa.color }}</td>
-    		<td>{{ avispa.venenosa }}</td>
-    		<td>
-    			<a href="{{ path('mostrar_avispa', {'id': avispa.id}) }}">Mostrar</a>
-    			<a href="avispas/editar/{{ avispa.id }}">Editar</a>
-    			<a href="avispas/borrar/{{ avispa.id }}">Borrar</a>
-    		</td>
+            <td>{{ continente.id }}</td>
+    		<td>{{ continente.nombre }}</td>
     	</tr>
     	{% endfor %}
     </table>

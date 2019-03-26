@@ -1,36 +1,103 @@
 
 import React, { Component } from 'react';
 
+	/*
 class Cuadrado extends Component {
+
+	constructor(props){
+
+		super(props);
+		this.state = {
+			valor: null,
+		};
+	}
 	
 	render(){
 
 		return(
 
-			<button className="cuadrado">
-				{}
+			<button 
+				className = "cuadrado" 
+				onClick = { () => this.props.onClick() }
+			>
+				{this.props.valor}
 			</button>
 		);
 	}
 }
+	*/
+
+function Cuadrado(props){
+
+	return(
+		<button className = "cuadrado" onClick = { props.onClick }>
+			{ props.valor }
+		</button>
+	);
+}
+
+function calcularGanador(cuadrados){
+
+	const lineas = [
+		[0, 1, 2],
+		[3, 4, 5],
+		[6, 7, 8],
+		[0, 3, 6],
+		[1, 4, 7],
+		[2, 5, 8],
+		[0, 4, 8],
+		[2, 4, 6],
+	];
+
+	for( let i = 0; i < lineas.length; i++){
+
+		const [a, b, c] = lineas[i];
+
+		if( cuadrados[a] && cuadrados[a] === cuadrados[b] && cuadrados[a] === cuadrados[c] ){
+
+			return cuadrados[a];
+		}
+	}
+
+	return null;
+}
 
 class Tablero extends Component {
 
+	handleClick(i){
+
+		const cuadrados = this.state.cuadrados.slice();
+
+		if( calcularGanador(cuadrados) || cuadrados[i] ){
+
+			return;
+		}
+		
+		cuadrados[i] = this.state.xIsNext ? 'X' : 'O';
+		this.setState({
+			cuadrados: cuadrados,
+			xIsNext: !this.state.xIsNext,
+		})
+	}
+
 	renderCuadrado(i){
 
-		return <Cuadrado />;
+		return (
+			<Cuadrado 
+				valor = { this.props.cuadrados[i] }
+				onClick = { () => this.props.onClick(i) }
+			/>
+		);
 	}
 
 	render(){
 
-		const estado = 'Próximo jugador: X';
-
 		return(
 
+			[
 			<div>Desde <a href="https://reactjs.org/tutorial/tutorial.html" target="_blank">Este tutorial</a></div>
-
-			<div>
-				<div className="estado">{ estado }</div>
+			,
+			<div className="interior">
 				<div className="fila">
 					{ this.renderCuadrado(0) }
 					{ this.renderCuadrado(1) }
@@ -47,13 +114,40 @@ class Tablero extends Component {
 					{ this.renderCuadrado(8) }
 				</div>
 			</div>
+			]
 		);
 	}	
 }
 
 class Juego extends Component {
+	
+	constructor(props){
+
+		super(props);
+		this.state = {
+			historial: [{
+				cuadrados: Array(9).fill(null),
+			}],
+			xIsNext: true,
+		}
+	}
 
 	render(){
+
+		const historial = this.state.historial;
+		const actual = historial[historial.length -1];
+		const ganador = calcularGanador(actual.cuadrados);
+
+		let estado;
+
+		if( ganador ){
+
+			estado = 'Ganador: ' + ganador;
+
+		} else {
+			
+			estado = 'Turno: ' + (this.state.xIsNext ? 'X' : 'O');
+		}
 
 		return(
 
@@ -61,13 +155,16 @@ class Juego extends Component {
 
 				<div className="tablero">
 
-					<Tablero />
+					<Tablero
+						cuadrados = {actual.cuadrados}
+						onClick = { (i) => this.handleClick(i) }
+					/>
 
 				</div>
 
 				<div className="info">
 
-					<div>{/* estado */}</div>
+					<div>{ estado }</div>
 
 					<ol>{ }</ol>
 

@@ -36,6 +36,7 @@ class App extends React.Component {
 		*/
 		return (
 
+			[
 			<BrowserRouter>
 				<div>
 					<ul>
@@ -50,15 +51,10 @@ class App extends React.Component {
 					</Switch>
 				</div>
 			</BrowserRouter>
+			,
 
-			<div id="errors" style="
-			  background: #c00;
-			  color: #fff;
-			  display: none;
-			  margin: -20px -20px 20px;
-			  padding: 20px;
-			  white-space: pre-wrap;
-			"></div>
+			<div id="errors"></div>
+			]
 
 		);
 	}

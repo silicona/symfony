@@ -16,7 +16,7 @@ class Inicio extends React.Component {
 					</section>
 				</div>,
 
-				<Lista/>
+				
 			]
 
 		);

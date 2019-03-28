@@ -64,7 +64,6 @@ function calcularGanador(cuadrados){
 
 class Tablero extends Component {
 
-
 	renderCuadrado(i){
 
 		return (
@@ -119,16 +118,17 @@ class Juego extends Component {
 	}
 
 	irA(movimiento){
+
 		this.setState({
 			paso: movimiento,
-			xIsNext: (movimiento % 2) == 0,
+			xIsNext: (movimiento % 2) === 0,
 		})
 	}
 
 	handleClick(i){
 
 		const historial = this.state.historial.slice(0, this.state.paso + 1 );
-		const actual = historial[this.state.paso];
+		const actual = historial[historial.length -1];
 		const cuadrados = actual.cuadrados.slice();
 
 		if( calcularGanador(cuadrados) || cuadrados[i] ){
@@ -141,7 +141,7 @@ class Juego extends Component {
 			historial: historial.concat([{
 				cuadrados: cuadrados,
 			}]),
-			paso: history.length,
+			paso: historial.length,
 			xIsNext: !this.state.xIsNext,
 		})
 	}
@@ -149,7 +149,7 @@ class Juego extends Component {
 	render(){
 
 		const historial = this.state.historial;
-		const actual = historial[historial.length -1];
+		const actual = historial[this.state.paso];
 		const ganador = calcularGanador(actual.cuadrados);
 
 		const movimientos = historial.map( (paso, movimiento) => {
@@ -161,6 +161,7 @@ class Juego extends Component {
 				</li>
 			);
 		});
+
 		let estado;
 
 		if( ganador ){
@@ -180,7 +181,7 @@ class Juego extends Component {
 
 					<Tablero
 						cuadrados = {actual.cuadrados}
-						onClick = { (i) => this.handleClick(i) }
+						onClick = { i => this.handleClick(i) }
 					/>
 
 				</div>

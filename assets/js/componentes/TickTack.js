@@ -64,21 +64,6 @@ function calcularGanador(cuadrados){
 
 class Tablero extends Component {
 
-	handleClick(i){
-
-		const cuadrados = this.state.cuadrados.slice();
-
-		if( calcularGanador(cuadrados) || cuadrados[i] ){
-
-			return;
-		}
-		
-		cuadrados[i] = this.state.xIsNext ? 'X' : 'O';
-		this.setState({
-			cuadrados: cuadrados,
-			xIsNext: !this.state.xIsNext,
-		})
-	}
 
 	renderCuadrado(i){
 
@@ -128,8 +113,37 @@ class Juego extends Component {
 			historial: [{
 				cuadrados: Array(9).fill(null),
 			}],
+			paso: 0,
 			xIsNext: true,
 		}
+	}
+
+	irA(movimiento){
+		this.setState({
+			paso: movimiento,
+			xIsNext: (movimiento % 2) == 0,
+		})
+	}
+
+	handleClick(i){
+
+		const historial = this.state.historial.slice(0, this.state.paso + 1 );
+		const actual = historial[this.state.paso];
+		const cuadrados = actual.cuadrados.slice();
+
+		if( calcularGanador(cuadrados) || cuadrados[i] ){
+
+			return;
+		}
+		
+		cuadrados[i] = this.state.xIsNext ? 'X' : 'O';
+		this.setState({
+			historial: historial.concat([{
+				cuadrados: cuadrados,
+			}]),
+			paso: history.length,
+			xIsNext: !this.state.xIsNext,
+		})
 	}
 
 	render(){
@@ -138,6 +152,15 @@ class Juego extends Component {
 		const actual = historial[historial.length -1];
 		const ganador = calcularGanador(actual.cuadrados);
 
+		const movimientos = historial.map( (paso, movimiento) => {
+			const texto = movimiento ?
+				'Ir al movimiento #' + movimiento : 'Ir al inicio del juego';
+			return(
+				<li key={movimiento}>
+					<button onClick = { () => this.irA(movimiento) }>{texto}</button>
+				</li>
+			);
+		});
 		let estado;
 
 		if( ganador ){
@@ -166,7 +189,7 @@ class Juego extends Component {
 
 					<div>{ estado }</div>
 
-					<ol>{ }</ol>
+					<ol>{ movimientos }</ol>
 
 				</div>
 
